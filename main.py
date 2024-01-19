@@ -40,7 +40,7 @@ def sign():
         else:
             print("success")
             collection.insert_one(user)
-            return jsonify({'message': 'User created successfully'})
+            return jsonify({'message': 'User created successfully','email' :email})
 
     except Exception as e:
         print(e)
