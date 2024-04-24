@@ -14,6 +14,10 @@ db = client['userData']
 collection = db['Data']
 
 
+@app.route("/",methods=['POST'])
+def demo():
+     return jsonify({'message': "Username not available"})
+
 @app.route("/signup", methods=['POST'])
 def sign():
     try:
