@@ -15,6 +15,15 @@ collection = db['Data']
 
 
 
+@app.route("/",methods=['POST'])
+def testing():
+    try:
+         return jsonify({ 'message': "Running"})
+        
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
 @app.route("/signup", methods=['POST'])
 def sign():
     try:
