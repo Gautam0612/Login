@@ -15,7 +15,7 @@ collection = db['Data']
 
 
 
-@app.route("/",methods=['POST'])
+@app.route("/",methods=['GET'])
 def testing():
     try:
          return jsonify({ 'message': "Running"})
