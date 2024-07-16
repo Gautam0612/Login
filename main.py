@@ -8,15 +8,21 @@ from email.mime.multipart import MIMEMultipart
 import string
 import os
 from datetime import timedelta , datetime
+from dotenv import load_dotenv
 import jwt
 
+
+# Configuration
+load_dotenv()
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 secret_key = os.urandom(24)
+mongo_url = os.getenv('MONGO_URL')
+
 app.config['PERMANENT_SESSION_LIFETIME']= timedelta(minutes=2)
 app.secret_key = secret_key
 client = MongoClient(
-    "mongodb+srv://Jenn:Janki6121@cluster0.vqk5j27.mongodb.net")
+    mongo_url)
 db = client['userData']
 collection = db['Data']
 
@@ -74,8 +80,8 @@ def send_otp():
     otp_body = f'Your OTP is {otp}'
 
     # Sender email credentials (in a real application, do not hardcode these credentials)
-    sender_email = "gautam.gs712@gmail.com"
-    sender_password = "bigv rqeo incb dcht"
+    sender_email = os.getenv('sender_email')
+    sender_password = os.getenv('sender_password')
 
     # Call the send_email_otp function
     if send_email_otp(sender_email, sender_password, recipient_email, otp_subject, otp_body):
@@ -106,8 +112,8 @@ def sign():
         
         # Generate OTP and send email
         otp = generate_otp()
-        sender_email = "gautam.gs712@gmail.com"
-        sender_password = "bigv rqeo incb dcht"
+        sender_email = os.getenv('sender_email')
+        sender_password = os.getenv('sender_password')
         if not send_email_otp(sender_email, sender_password, email, 'Your OTP Code', f'Your OTP is {otp}'):
             return jsonify({'message': 'Failed to send OTP'}), 500
         
